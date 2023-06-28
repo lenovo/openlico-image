@@ -1,0 +1,10 @@
+include:
+  - project: 'lico/gitlab-runner-configure'
+    file:
+      - 'default.yml'
+      - 'obs.yml'
+      - 'fossa.yml'
+
+obs.trigger:
+  variables:
+    OBS_PACKAGE: lico-image

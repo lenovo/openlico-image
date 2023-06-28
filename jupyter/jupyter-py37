@@ -1,0 +1,42 @@
+# Copyright 2015-2023 Lenovo
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+Bootstrap:docker
+From:nvidia/cuda:11.8.0-devel-ubuntu22.04
+
+%files
+    jupyter/start /opt
+
+%post
+    rm -f /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
+    apt-get --allow-unauthenticated=true update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget \
+        r-base-dev \
+        automake \
+        autoconf \
+        libtool \
+        cmake \
+        gcc \
+        g++
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /opt/miniconda.sh
+    bash /opt/miniconda.sh -b -p /opt/miniconda
+    export PATH="/opt/miniconda/bin:$PATH"
+    conda create -v -y -n py37 python=3.7
+    conda install -v -y -n py37 tensorflow-gpu==2.4.1 r==3.6.0 r-essentials==3.6.0 matplotlib==3.5.2 pandas==1.3.5 scikit-learn==1.0.2 notebook==6.4.12
+    chmod 777 /opt/start
+    chmod 777 -R /opt/miniconda
+
+%environment
+    IMAGE_CONDA_ENV=py37
+    export PATH="/opt/miniconda/bin:$PATH" IMAGE_CONDA_ENV

@@ -1,0 +1,104 @@
+# openlico-image
+
+This is for make singularity images
+
+## Installation
+
+singularity
+
+## Usage
+
+You can make all the images at once, all the images are in the dist directory
+
+```
+make all
+
+```
+
+You can make all the images of a specific framework at once, all the images are in the dist directory
+
+```
+make caffe
+
+make intel-caffe
+
+make intel-python
+
+make tensorflow
+
+make mxnet
+
+make neon
+
+make chainer
+
+make jupyter
+
+make pytorch
+
+make intel-pytorch
+
+make intel-tensorflow
+
+make scikit
+
+make tensorrt
+
+make rstudio
+
+make paddlepaddle
+```
+
+You can also make a image at a time
+
+The image naming method is: Frame Name - Version Name - CPU or GPU - Cuda Version Name
+
+```
+make caffe-cpu
+
+make caffe-gpu
+
+make NVCaffe
+
+make tensorflow1
+
+make tensorflow-mkl
+
+make tensorflow-hbase
+
+make tensorflow-keras
+
+make tensorflow-mongodb
+
+make tensorflow2
+
+make intel-tensorflow1
+
+make intel-tensorflow2-cpu
+
+make mxnet-cpu
+
+make mxnet-gpu
+
+make intel-caffe
+
+make neon
+
+make intel-python
+
+make chainer
+
+make jupyter
+
+make pytorch
+
+make intel-pytorch-cpu
+
+make scikit
+
+make tensorrt8
+
+make rstudio
+
+make paddlepaddle
+```

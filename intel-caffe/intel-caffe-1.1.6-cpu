@@ -1,0 +1,95 @@
+# Copyright 2015-2023 Lenovo
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+Bootstrap: docker
+From: centos:7.6.1810
+
+%post
+    yum -y install epel-release
+    yum -y install graphviz
+    yum upgrade -y
+    yum install -y \
+        redhat-rpm-config \
+        tar \
+        findutils \
+        make \
+        gcc-c++ \
+        cmake \
+        git \
+        wget \
+        ssh \
+        atlas-devel \
+        boost-devel \
+        gflags-devel \
+        glog-devel \
+        hdf5-devel \
+        leveldb-devel \
+        lmdb-devel \
+        opencv-devel \
+        protobuf-devel \
+        snappy-devel \
+        protobuf-compiler \
+        freetype-devel \
+        libpng-devel \
+        python-devel \
+        python-pip \
+        gcc-gfortran \
+        libjpeg-turbo-devel \
+        dapl \
+        dapl-utils \
+        dapl-devel \
+        compat-dapl \
+        compat-dapl-devel \
+        libfabric
+    yum clean all
+
+    cd /opt
+    yum -y remove protobuf
+    wget https://github.com/google/protobuf/releases/download/v3.5.1/protobuf-cpp-3.5.1.tar.gz
+    tar -xvf protobuf-cpp-3.5.1.tar.gz
+    cd protobuf-3.5.1
+    ./configure
+    make && make install
+    cd /opt
+    git clone -b 1.1.6 --depth 1 https://github.com/intel/caffe.git
+    cd caffe
+    pip --default-timeout=100 install -U 'pip==20.3.4'
+    sed -i 's/^pandas.*/pandas==0.12.0/' python/requirements.txt
+    sed -i 's/^matplotlib.*/matplotlib==2.0.0/' python/requirements.txt
+    sed -i 's/^networkx.*/networkx==1.8.1/' python/requirements.txt
+    pip install numpy==1.12.1
+    pip --default-timeout=100 install -r python/requirements.txt pydot==1.4.2
+    yum install -y numpy
+    cp Makefile.config.example  Makefile.config
+    sed -i 's/^# \(USE_MLSL\)/\1/' Makefile.config
+    sed -i 's/^# \(WITH_PYTHON_LAYER\)/\1/' Makefile.config
+    export LD_LIBRARY_PATH=/opt/caffe/external/mlsl/l_mlsl_2018.1.005/intel64/lib:$LD_LIBRARY_PATH
+    unset MLSL_ROOT
+    make all -j"$(nproc)"
+    ln -s /opt/caffe/build/examples/cpp_classification/classification.bin /opt/caffe/build/tools/classification.bin
+    # caffe python interface
+    make pycaffe
+    yum remove -y numpy
+    pip --default-timeout=100 uninstall -y numpy
+    pip --default-timeout=100 install numpy==1.12.1
+    pip --default-timeout=100 install  -U  scikit-image==0.14.5 scikit-learn==0.20.4
+    echo '/usr/local/lib' >> /etc/ld.so.conf.d/libprotobuf.conf
+    echo "/opt/caffe/build/lib" >> /etc/ld.so.conf.d/caffe.conf && ldconfig
+%environment
+    LD_LIBRARY_PATH=/opt/caffe/external/mlsl/l_mlsl_2018.1.005/intel64/lib:$LD_LIBRARY_PATH
+    MLSL_NUM_SERVERS=0
+    MLSL_ROOT=/opt/caffe/external/mlsl/l_mlsl_2018.1.005
+    PYTHONPATH=/opt/caffe/python:$PYTHONPATH
+    PATH=/opt/caffe/build/tools:/opt/caffe/python:$PATH
+    export LD_LIBRARY_PATH MLSL_NUM_SERVERS MLSL_ROOT PYTHONPATH PATH

@@ -1,0 +1,90 @@
+#!/bin/bash
+set -e
+ARGS=`getopt -o e:l:m:p:u:w:j:k:t --l conda_env:,language:,password:,port:,base_url:,workdir:,jupyter_timeout:,kernel_timeout:,terminal_timeout: -n "$0" -- "$@"`
+if [ $? != 0 ]; then
+    echo "Terminating.Unknown parameters..."
+    exit 1
+fi
+eval set -- "${ARGS}"
+while true
+do
+    case "$1" in
+        -e|--conda_env)
+            conda_env=$2
+            shift 2
+            ;;
+        -l|--language)
+            language=$2
+            shift 2
+            ;;
+        -m|--password)
+            password=$2
+            shift 2
+            ;;
+        -p|--port)
+            port=$2
+            shift 2
+            ;;
+        -u|--base_url)
+            base_url=$2
+            shift 2
+            ;;
+        -w|--workdir)
+            workdir=$2
+            shift 2
+            ;;
+        -j|--jupyter_timeout)
+            jupyter_timeout=$2
+            shift 2
+            ;;
+        -k|--kernel_timeout)
+            kernel_timeout=$2
+            shift 2
+            ;;
+        -t|--terminal_timeout)
+            terminal_timeout=$2
+            shift 2
+            ;;
+        --)
+            shift
+            break
+            ;;
+        *)
+            echo "Internal error!"
+            exit 1
+            ;;
+    esac
+done
+if [[ -z $jupyter_timeout ]]; then
+    jupyter_timeout=0
+fi
+if [[ -z $kernel_timeout ]]; then
+    kernel_timeout=0
+fi
+if [[ -z $terminal_timeout ]]; then
+    terminal_timeout=0
+fi
+is_empty_dir(){
+    return `ls -A $1|wc -w`
+}
+if is_empty_dir $conda_env
+then
+    conda create -y -v --clone $IMAGE_CONDA_ENV -p $conda_env
+    source activate $conda_env
+else
+    set +e
+    source activate $conda_env
+    if [ $? -ne 0 ]; then
+        echo "This directory is not a non-empty directory and not have a canda environment!"
+        exit 1
+    fi
+    set -e
+fi
+jupyter notebook --no-browser --ip=0.0.0.0 --port=$port --NotebookApp.port_retries=0 \
+--NotebookApp.password=$password --NotebookApp.notebook_dir=$workdir \
+--NotebookApp.base_url=$base_url --NotebookApp.allow_origin='*' \
+--NotebookApp.allow_remote_access=True --NotebookApp.disable_check_xsrf=True \
+--NotebookApp.shutdown_no_activity_timeout=$jupyter_timeout \
+--MappingKernelManager.cull_idle_timeout=$kernel_timeout \
+--TerminalManager.cull_inactive_timeout=$terminal_timeout \
+--allow-root

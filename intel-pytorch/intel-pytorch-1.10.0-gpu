@@ -1,0 +1,11 @@
+# Copyright 2021-present Lenovo
+# Confidential and Proprietary
+
+Bootstrap: docker
+From: intel/intel-extension-for-pytorch:gpu
+
+%post
+    pip --default-timeout=100 install -U scikit-learn==1.2.2
+    pip --default-timeout=100 install --no-deps torchvision==0.11.1
+    pip --default-timeout=100 install -U pillow==9.5.0
+    pip --default-timeout=100 install -U requests==2.28.2

@@ -1,0 +1,9 @@
+# Copyright 2018-present Lenovo
+# Confidential and Proprietary
+
+Bootstrap: docker
+From: intel/intel-extension-for-tensorflow:gpu
+
+%post
+    pip --default-timeout=100 install -U scikit-learn==1.2.2
+

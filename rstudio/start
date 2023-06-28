@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cp /scripts/rstudio.conf /etc/nginx/conf.d/
+sed -i "s/RSTUDIO_NGINX_PORT/$RSTUDIO_NGINX_PORT/g" /etc/nginx/conf.d/rstudio.conf
+sed -i "s/RSTUDIO_PORT/$RSTUDIO_PORT/g" /etc/nginx/conf.d/rstudio.conf
+service nginx restart
+rserver --www-port=$RSTUDIO_PORT \
+        --auth-none=0 \
+        --auth-pam-helper-path=pam-helper \
+        --rsession-path=/etc/rstudio/rsession.sh \
+        --www-root-path=$BASE_URL \
+        --server-user=$(id -un)

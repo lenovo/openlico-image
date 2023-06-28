@@ -1,0 +1,73 @@
+# Copyright 2015-2023 Lenovo
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+Bootstrap: docker
+From: ubuntu:16.04
+
+%post
+    apt-get update --fix-missing && apt-get install -y --no-install-recommends \
+        apt-utils \
+        build-essential \
+        git \
+        clang \
+        cmake \
+        curl \
+        libboost-filesystem-dev \
+        libboost-system-dev \
+        libssl-dev \
+        libhdf5-dev \
+        libsox-dev \
+        libopencv-dev \
+        libcurl4-openssl-dev \
+        libyaml-dev \
+        libpython-dev \
+        numactl \
+        pkg-config \
+        python-dev \
+        python-pip \
+        python-virtualenv \
+        python3-numpy \
+        software-properties-common \
+        unzip \
+        wget \
+	    vim \
+        && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+    pip --default-timeout=100 install -U 'pip==20.3.4'
+
+    pip --default-timeout=100 --no-cache-dir install --upgrade setuptools && \
+    pip --default-timeout=100 --no-cache-dir install --upgrade --force-reinstall virtualenv==20.15.1
+
+    pip --default-timeout=100 install -U scikit-learn==0.20.4
+    git clone -b v2.6.0 https://github.com/NervanaSystems/neon /neon && \
+    make -C /neon sysinstall && \
+    rm -rf /neon/mklml_*.tgz
+
+    echo '[ ! -z "$TERM" -a -r /etc/motd ] && cat /etc/issue && cat /etc/motd' \
+	>> /etc/bash.bashrc \
+	; echo "\
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\
+|								\n\
+| Docker container running Ubuntu				\n\
+| with Neon optimized for CPU		        \n\
+| with Intel(R) MKL						\n\
+|								\n\
+||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||\n\
+\n "\
+	> /etc/motd
+
+%environment
+    export LC_ALL=C

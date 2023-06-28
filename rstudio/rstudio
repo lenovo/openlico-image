@@ -1,0 +1,38 @@
+# Copyright 2015-2023 Lenovo
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+Bootstrap:docker
+From:nvidia/cuda:11.8.0-devel-ubuntu20.04
+
+%files
+    rstudio/general /scripts
+    rstudio/start /scripts/start
+
+%environment
+    export PATH=/usr/lib/rstudio-server/bin:$PATH
+
+%post
+    export R_VERSION=4.1.2
+    export R_HOME=/usr/local/lib/R
+    export TZ=Etc/UTC
+    export S6_VERSION=v2.1.0.2
+    export RSTUDIO_VERSION=2022.12.0+353
+    rm -f /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
+    chmod -R 777 /scripts
+    apt-get --allow-unauthenticated=true update && DEBIAN_FRONTEND=noninteractive  apt-get install -y nginx
+    sed -i "/include \/etc\/nginx\/modules-enabled\/\*\.conf;/d" /etc/nginx/nginx.conf
+    sed -i "/include \/etc\/nginx\/sites-enabled\/\*;/d" /etc/nginx/nginx.conf
+    /scripts/install_R.sh
+    ln -sf /scripts/install2.r  /usr/local/bin/install2.r
+    /scripts/install_rstudio.sh
