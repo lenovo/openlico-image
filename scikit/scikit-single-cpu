@@ -19,8 +19,8 @@ From: centos:centos7.6.1810
 %post
     yum -y update
     yum install -y wget
-    wget https://repo.anaconda.com/archive/Anaconda3-2022.10-Linux-x86_64.sh
-    bash Anaconda3-2022.10-Linux-x86_64.sh -b -p /anaconda3
+    wget https://repo.anaconda.com/archive/Anaconda3-2023.07-2-Linux-x86_64.sh
+    bash Anaconda3-2023.07-2-Linux-x86_64.sh -b -p /anaconda3
 
 %environment
      export PATH=/anaconda3/bin:$PATH

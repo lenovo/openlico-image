@@ -13,9 +13,11 @@
 # limitations under the License.
 
 Bootstrap: docker
-From: nvcr.io/nvidia/tensorflow:22.12-tf1-py3
+From: nvcr.io/nvidia/tensorflow:23.03-tf1-py3
 
 %post
-    pip --default-timeout=100 install fastrlock==0.8
-    pip --default-timeout=100 install scikit-learn==0.24.2 keras==2.2.4
+    pip --default-timeout=100 install thrift==0.16.0 happybase==1.2.0
+    pip --default-timeout=100 install -U scikit-learn==1.3.0
 
+%environment
+    export PYTHONIOENCODING=utf-8

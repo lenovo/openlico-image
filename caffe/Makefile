@@ -14,15 +14,12 @@
 
 TARGETS += caffe
 
-CAFFE_TARGETS = caffe-cpu caffe-gpu NVCaffe
+CAFFE_TARGETS = caffe-cpu NVCaffe
 
 caffe: $(CAFFE_TARGETS)
 
 caffe-cpu: $(IMAGE_DIR)
 	singularity build $(IMAGE_DIR)/caffe-1.0-cpu.image caffe/caffe-1.0-cpu
-
-caffe-gpu: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/caffe-1.0-gpu-cuda102.image caffe/caffe-1.0-gpu-cuda102
 
 NVCaffe: $(IMAGE_DIR)
 	singularity build $(IMAGE_DIR)/NVCaffe-0.17.3-gpu-cuda102.image caffe/NVCaffe-0.17.3-gpu-cuda102

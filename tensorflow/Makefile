@@ -22,16 +22,16 @@ tensorflow-mkl: $(IMAGE_DIR)
 	singularity build $(IMAGE_DIR)/tensorflow-1.15.2-mkl.image tensorflow/tensorflow-1.15.2-mkl
 
 tensorflow1: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda118.image tensorflow/tensorflow-1.15.5-cuda118
+	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda121.image tensorflow/tensorflow-1.15.5-cuda121
 
 tensorflow-hbase: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda118-hbase.image tensorflow/tensorflow-1.15.5-cuda118-hbase
+	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda121-hbase.image tensorflow/tensorflow-1.15.5-cuda121-hbase
 
 tensorflow-keras: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda118-keras.image tensorflow/tensorflow-1.15.5-cuda118-keras
+	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda121-keras.image tensorflow/tensorflow-1.15.5-cuda121-keras
 
 tensorflow-mongodb: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda118-mongodb.image tensorflow/tensorflow-1.15.5-cuda118-mongodb
+	singularity build $(IMAGE_DIR)/tensorflow-1.15.5-cuda121-mongodb.image tensorflow/tensorflow-1.15.5-cuda121-mongodb
 
 tensorflow2: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/tensorflow-2.10.1-cuda118.image tensorflow/tensorflow-2.10.1-cuda118
+	singularity build $(IMAGE_DIR)/tensorflow-2.12.0-cuda121.image tensorflow/tensorflow-2.12.0-cuda121

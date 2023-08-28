@@ -13,15 +13,7 @@
 # limitations under the License.
 
 Bootstrap: docker
-From: intelpython/intelpython3_full:2021.4.0-0
-
-%files
-    jupyter/start /opt
+From: nvcr.io/nvidia/tensorflow:23.03-tf1-py3
 
 %post
-    conda install -y notebook==6.4.12
-    chmod 777 /opt/start
-
-%environment
-    IMAGE_CONDA_ENV=base
-    export PATH="/opt/conda/bin:$PATH" IMAGE_CONDA_ENV
+    pip --default-timeout=100 install -U scikit-learn==1.3.0

@@ -19,4 +19,4 @@ INTEL_PYTORCH_TARGETS = intel-pytorch-cpu
 intel-pytorch: $(INTEL_PYTORCH_TARGETS)
 
 intel-pytorch-cpu: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/intel-pytorch-1.13.0-cpu.image intel-pytorch/intel-pytorch-1.13.0-cpu
+	singularity build $(IMAGE_DIR)/intel-pytorch-2.0.1-cpu.image intel-pytorch/intel-pytorch-2.0.1-cpu

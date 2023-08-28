@@ -13,10 +13,7 @@
 # limitations under the License.
 
 Bootstrap: docker
-From: nvcr.io/nvidia/tensorrt:22.12-py3
+From: nvcr.io/nvidia/paddlepaddle:23.07-py3
 
 %post
-    apt-get update && apt-get install -y libgl1-mesa-glx
-    pip3 --default-timeout=100 install -U pip
-    pip3 --default-timeout=100 install opencv-contrib-python==4.4.0.46
-    pip3 --default-timeout=100 install opencv-python==4.4.0.46
+    pip --default-timeout=100 install -U scikit-learn==1.3.0

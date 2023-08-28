@@ -12,30 +12,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-Bootstrap: docker
-From: docker.io/library/ubuntu:20.04
+Bootstrap:docker
+From:nvidia/cuda:12.0.1-cudnn8-devel-ubuntu22.04
 
 %files
     jupyter/start /opt
 
 %post
-
-    apt-get update && apt-get install -y python3-pip  python3-setuptools  wget
-    rm -rf /var/lib/apt/lists/*
-
-    cd /opt
-    wget -c https://repo.anaconda.com/miniconda/Miniconda3-py37_23.1.0-1-Linux-x86_64.sh
-    chmod 777 Miniconda3-py37_23.1.0-1-Linux-x86_64.sh
-    bash Miniconda3-py37_23.1.0-1-Linux-x86_64.sh -b -p /opt/miniconda
-    rm -f Miniconda3-py37_23.1.0-1-Linux-x86_64.sh
-
+    rm -f /etc/apt/sources.list.d/cuda.list /etc/apt/sources.list.d/nvidia-ml.list
+    apt-get --allow-unauthenticated=true update
+    DEBIAN_FRONTEND=noninteractive apt-get install -y wget \
+        r-base-dev \
+        automake \
+        autoconf \
+        libtool \
+        cmake \
+        gcc \
+        g++
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /opt/miniconda.sh
+    bash /opt/miniconda.sh -b -p /opt/miniconda
     export PATH="/opt/miniconda/bin:$PATH"
-    conda install -y python=3.7
-    pip install intel-tensorflow==2.8.0
-    pip install protobuf==3.20.0 # tensorflow 2.8.0 need protobuf==3.20.0
-    pip install notebook==6.4.12
+    conda create -v -y -n py310 python=3.10
+    conda install -v -y -n py310 r==3.6.0 r-essentials==3.6.0 notebook==6.4.12
     chmod 777 /opt/start
+    chmod 777 -R /opt/miniconda
 
 %environment
-    IMAGE_CONDA_ENV=base
+    IMAGE_CONDA_ENV=py310
     export PATH="/opt/miniconda/bin:$PATH" IMAGE_CONDA_ENV

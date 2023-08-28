@@ -15,4 +15,4 @@
 TARGETS += pytorch
 
 pytorch: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/pytorch-1.14.0-cuda118.image pytorch/pytorch-1.14.0-cuda118
+	singularity build $(IMAGE_DIR)/pytorch-2.1.0-cuda121.image pytorch/pytorch-2.1.0-cuda121
