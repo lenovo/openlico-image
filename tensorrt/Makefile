@@ -19,4 +19,4 @@ TENSORRT_TARGETS = tensorrt8
 tensorrt: $(TENSORRT_TARGETS)
 
 tensorrt8:$(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/tensorrt-8.5.1.image tensorrt/tensorrt-8.5.1-cuda118
+	singularity build $(IMAGE_DIR)/tensorrt-8.6.1.6.image tensorrt/tensorrt-8.6.1.6-cuda121

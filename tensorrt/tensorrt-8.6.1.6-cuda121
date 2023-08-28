@@ -13,7 +13,10 @@
 # limitations under the License.
 
 Bootstrap: docker
-From: nvcr.io/nvidia/tensorflow:22.12-tf2-py3
+From: nvcr.io/nvidia/tensorrt:23.07-py3
 
 %post
-    pip --default-timeout=100 install -U scikit-learn==1.1.2
+    apt-get update && apt-get install -y libgl1-mesa-glx
+    pip3 --default-timeout=100 install -U pip
+    pip3 --default-timeout=100 install opencv-contrib-python==4.8.0.76
+    pip3 --default-timeout=100 install opencv-python==4.8.0.76

@@ -15,4 +15,4 @@
 TARGETS += paddlepaddle
 
 paddlepaddle: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/paddle-2.4.1-cuda117.image paddlepaddle/paddle-2.4.1-cuda117
+	singularity build $(IMAGE_DIR)/paddle-2.4.1-cuda121.image paddlepaddle/paddle-2.4.1-cuda121

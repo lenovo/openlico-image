@@ -14,24 +14,15 @@
 
 TARGETS += jupyter
 
-JUPYTER_TARGETS = jupyter-py37 jupyter-py38 jupyter-intel-py37 jupyter-intel-optimized-pytorch jupyter-intel-optimized-tensorflow jupyter-default
+JUPYTER_TARGETS = jupyter-default jupyter-py39 jupyter-py310
 
 jupyter: $(JUPYTER_TARGETS)
-
-jupyter-py37: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/jupyter-py37.image jupyter/jupyter-py37
-
-jupyter-py38: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/jupyter-py38.image jupyter/jupyter-py38
 
 jupyter-default: $(IMAGE_DIR)
 	singularity build $(IMAGE_DIR)/jupyter-default.image jupyter/jupyter-default
 
-jupyter-intel-py37: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/jupyter-intel-py37.image jupyter/jupyter-intel-py37
+jupyter-py39: $(IMAGE_DIR)
+	singularity build $(IMAGE_DIR)/jupyter-py39.image jupyter/jupyter-py39
 
-jupyter-intel-optimized-pytorch: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/jupyter-intel-optimized-pytorch.image jupyter/jupyter-intel-optimized-pytorch
-
-jupyter-intel-optimized-tensorflow: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/jupyter-intel-optimized-tensorflow.image jupyter/jupyter-intel-optimized-tensorflow
+jupyter-py310: $(IMAGE_DIR)
+	singularity build $(IMAGE_DIR)/jupyter-py310.image jupyter/jupyter-py310

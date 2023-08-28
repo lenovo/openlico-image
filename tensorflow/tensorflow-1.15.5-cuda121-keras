@@ -13,8 +13,9 @@
 # limitations under the License.
 
 Bootstrap: docker
-From: nvcr.io/nvidia/tensorflow:22.12-tf1-py3
+From: nvcr.io/nvidia/tensorflow:23.03-tf1-py3
 
 %post
-    pip --default-timeout=100 install pymongo==4.1.1
-    pip --default-timeout=100 install -U scikit-learn==0.24.2
+    pip --default-timeout=100 install fastrlock==0.8.1
+    pip --default-timeout=100 install scikit-learn==1.2.0 keras==2.2.4
+

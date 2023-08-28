@@ -44,6 +44,7 @@ From: ubuntu:16.04
 
     export LC_ALL=C
     cd /opt/caffe/python
+    sed -i 's/^Cython.*/Cython==0.29.32/' requirements.txt
     sed -i 's/^pandas.*/pandas==0.12.0/' requirements.txt
     sed -i 's/^matplotlib.*/matplotlib==2.0.0/' requirements.txt
     sed -i 's/^networkx.*/networkx==1.8.1/' requirements.txt

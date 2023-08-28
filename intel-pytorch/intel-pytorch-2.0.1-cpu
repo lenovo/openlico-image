@@ -13,7 +13,7 @@
 # limitations under the License.
 
 Bootstrap: docker
-From: intel/oneapi-aikit:2023.1.0-devel-ubuntu22.04
+From: intel/oneapi-aikit:2023.2.0-devel-ubuntu22.04
 
 %post
     /opt/intel/oneapi/pytorch/latest/bin/pip --default-timeout=10 install opencv-python==4.7.0.72

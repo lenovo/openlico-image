@@ -15,4 +15,4 @@
 TARGETS += intel-python
 
 intel-python: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/intel-python-3.7.image intel-python/intel-python-3.7
+	singularity build $(IMAGE_DIR)/intel-python-3.10.image intel-python/intel-python-3.10
