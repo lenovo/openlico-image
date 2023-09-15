@@ -13,7 +13,7 @@
 # limitations under the License.
 
 Bootstrap: docker
-From: nvcr.io/nvidia/tensorrt:23.07-py3
+From: nvcr.io/nvidia/tensorrt:23.02-py3
 
 %post
     apt-get update && apt-get install -y libgl1-mesa-glx
