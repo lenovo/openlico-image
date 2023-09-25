@@ -12,7 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-TARGETS += intel-python
+TARGETS += jupyterlab
 
-intel-python: $(IMAGE_DIR)
-	singularity build $(IMAGE_DIR)/intel-python-3.10.image intel-python/intel-python-3.10
+JUPYTERLAB_TARGETS = jupyterlab-py39 jupyterlab-py310 jupyterlab-default
+
+jupyterlab: $(JUPYTERLAB_TARGETS)
+
+jupyterlab-py39: $(IMAGE_DIR)
+	singularity build $(IMAGE_DIR)/jupyterlab-py39.image jupyterlab/jupyterlab-py39
+
+jupyterlab-py310: $(IMAGE_DIR)
+	singularity build $(IMAGE_DIR)/jupyterlab-py310.image jupyterlab/jupyterlab-py310
+
+jupyterlab-default: $(IMAGE_DIR)
+	singularity build $(IMAGE_DIR)/jupyterlab-default.image jupyterlab/jupyterlab-default
