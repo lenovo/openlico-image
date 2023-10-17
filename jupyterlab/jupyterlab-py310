@@ -35,7 +35,7 @@ From:nvidia/cuda:12.0.1-cudnn8-devel-ubuntu22.04
     export PATH="/opt/miniconda/bin:$PATH"
     conda create -v -y -n py310 python=3.10
     conda install -v -y -n py310 r==3.6.0 r-essentials==3.6.0
-    conda install -v -y -n py310 -c conda-forge jupyterlab==3.6.5
+    conda install -v -y -n py310 -c conda-forge jupyterlab==4.0.3
     chmod 777 /opt/start
     chmod 777 -R /opt/miniconda
 
