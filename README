@@ -24,29 +24,29 @@ make intel-caffe
 
 make intel-python
 
-make tensorflow
+make intel-pytorch
+
+make intel-tensorflow
+
+make jupyter
+
+make jupyterlab
 
 make mxnet
 
 make neon
 
-make chainer
-
-make jupyter
+make paddlepaddle
 
 make pytorch
 
-make intel-pytorch
-
-make intel-tensorflow
+make rstudio
 
 make scikit
 
+make tensorflow
+
 make tensorrt
-
-make rstudio
-
-make paddlepaddle
 ```
 
 You can also make a image at a time
@@ -56,9 +56,17 @@ The image naming method is: Frame Name - Version Name - CPU or GPU - Cuda Versio
 ```
 make caffe-cpu
 
-make caffe-gpu
-
 make NVCaffe
+
+make intel-caffe
+
+make intel-python
+
+make intel-pytorch-cpu
+
+make intel-tensorflow1
+
+make intel-tensorflow2-cpu
 
 make tensorflow1
 
@@ -72,33 +80,23 @@ make tensorflow-mongodb
 
 make tensorflow2
 
-make intel-tensorflow1
+make jupyter
 
-make intel-tensorflow2-cpu
+make jupyterlab
 
 make mxnet-cpu
 
 make mxnet-gpu
 
-make intel-caffe
-
 make neon
 
-make intel-python
-
-make chainer
-
-make jupyter
+make paddlepaddle
 
 make pytorch
 
-make intel-pytorch-cpu
+make rstudio
 
 make scikit
 
 make tensorrt8
-
-make rstudio
-
-make paddlepaddle
 ```
